@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <title>Index</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <div id="main">
+        <h1>
+            <a target="">Tomato Leaf Classification</a>
+        </h1>
+
+        <form method="post" runat="server" action="/upload" enctype=multipart/form-data>
+            <img id="blah" src="{{url_for('static',filename='_Photo_Image.png')}}" alt="your image" />
+            <input type="file" name="file" id="imgInp" onselect="" />
+            <input type="submit" value="Upload" />
+        </form>
+        <script>
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $('#blah').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#imgInp").change(function() {
+                readURL(this);
+            });
+        </script>
+
+        <div id="result">
+            <span id="result_optn">
+                <h2>Click on Upload Image...</h2>
+            </span>
+        </div>
+    </div>
+</body>
+
+</html>

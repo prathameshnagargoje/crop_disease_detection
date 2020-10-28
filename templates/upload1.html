@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="{{url_for('static',filename='upload1.css')}}">
+  <link rel="stylesheet" href="{{url_for('static',filename='loading_screen.css')}}">
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;700&display=swap" rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+
+  <body style="background-image:url('/static/background-result.jpg');">
+    <div id="loading_anime" style="display: none;">
+      <div id="anime_loading">
+      </div>
+          <div id="loading_wrapper">
+              <div class="lds-roller">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+              </div>
+          </div>
+  </div>
+  <div class="container-fluid">
+
+      <div class="col-lg-12">
+
+        <div id="form-ui">
+          <div class="form-group text-center">
+            <h1 class="text-center">Upload</h1>
+            <!-- choose  file to be upload -->
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="upload-image-here">
+
+
+                  <label for="">Upload Image Here</label>
+                  <input type="file" name="" id="image_file" class="form-control" value="" placeholder="upload infected image" required>
+                  <br>
+                  <button type="submit" class="btn upload-button btn-lg" name=""><i class="fa fa-upload" aria-hidden="true"> Upload</i></button>
+                </div>
+              </div>
+
+            </div>
+            <span id="hidden" style="display: none;">
+
+            </span>
+
+            <!-- show uploaded image  HIDDEN SHOWED AFTER CLICKED ON UPLOAD BUTTON-->
+
+            <div class="upload_span show-uploaded">
+              <div class="row">
+                <div class="col-lg-12">
+                  <label for="">Your uploaded crop image is:</label><br><br>
+                  <div id="img_div">
+                    
+                  </div>
+
+                </div>
+
+              </div>
+              <div class="row"   >
+                <div class="col-lg-12">
+                  <form method="post" action="/result" class="">
+                    <input type="hidden" value="" id="filename" name="filename" class="form-control"><br>
+                      <button type="submit" onclick="document.documentElement.scrollTop = 0;$('#loading_anime').show();" name="button" class="btn btn-primary btn-lg" id="predict_button"> Predict</button>
+                  </form>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+
+    </div>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+$(".upload-button").click(function(){
+  var property = document.getElementById("image_file").files[0];
+  var image_name = property.name;
+  var image_extention = image_name.split('.').pop().toLowerCase();
+  if(jQuery.inArray(image_extention,['jpg','jpeg','png','gif'])==-1){
+    alert("Invalid Image File");
+  }else{
+    var image_size = property.size;
+    if(image_size>2000000){
+      alert("Image file size is very big...");
+    }else{
+      var form_data = new FormData();
+      form_data.append("file",property);
+      $.ajax({
+        url:"/upload_file",
+        method:"POST",
+        data:form_data,
+        contentType:false,
+        cache:false,
+        processData:false,
+        beforeSend:function(){
+          $("#loading_anime").show();
+        },
+        success:function(data){
+          $("#loading_anime").hide();
+          data = data.split("\n\n\n");
+          $("#img_div").html(data[0].toString());
+          $("#filename").val(data[1].toString());
+          $(".upload_span ").show(1000);
+        },
+      })
+    }
+  }  
+});
+
+</script>
+
+</body>
+
+</html>

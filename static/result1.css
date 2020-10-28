@@ -1,0 +1,63 @@
+*{
+margin: 0;
+padding:0;
+}
+
+body{
+font-family: Ubuntu, sans-serif;
+background-image:url("background-result.jpg");
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+background-attachment: fixed;
+}
+.container-fluid {
+    padding: 3% 15% 7%;
+  }
+#form-ui{
+opacity: 0.9;
+background-color: #333;
+padding: 30px;
+margin-top: 50px;
+border-radius: 10px;
+}
+
+#form-ui label{
+color: #fff;
+}
+
+#form-ui h1{
+color: #fff;
+font-size: 2.5rem;
+
+}
+
+
+
+
+.upload-image-here{
+display: inline-block;
+padding: 3% 0% 3% 0%;
+}
+#uploaded_img {
+    height: 250px;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.show-uploaded{
+display: none;
+}
+
+
+#result_solu h4{
+color: #fff;
+}
+
+
+@media (max-width:1020px) {
+#title{
+text-align: center;
+}

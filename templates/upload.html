@@ -1,0 +1,54 @@
+<html>
+
+<head>
+    <title>Result</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="main">
+        <h1>
+            <a target="">Tomato Leaf Classification</a>
+        </h1>
+
+        <form method="post" runat="server" action="/upload" enctype=multipart/form-data>
+            <img id="blah" src="{{url_for('static',filename='_Photo_Image.png')}}" alt="your image" />
+            <input type="file" id="imgInp" name="file" />
+            <input type="submit" value="Upload" />
+        </form>
+
+        <script>
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $('#blah').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#imgInp").change(function() {
+                readURL(this);
+            });
+        </script>
+
+        <div id="upload">
+            <div id="upload_span">
+                <h4 class="h4_heading">Filename : {{fname}}</h4>
+                <div id="img_div">
+                    <img id="uploaded_img" class="upload_img" src="{{url_for('static',filename=fname)}}" alt="Uploaded Image">
+                </div>
+                <form method="post" action="/result">
+                    <input type="hidden" value="{{fname}}" id="filename" name="filename">
+                    <input type="submit" id="predict_button" value="Predict">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
